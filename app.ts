@@ -2,6 +2,8 @@ import express, { Request, Response, NextFunction } from 'express';
 import DelayService from "./DelayService";
 import {ExampleResponse} from "./ExampleResponse";
 import logger from './Logger';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
 const port: number = 3000;
@@ -37,7 +39,7 @@ app.get('/api/delay', async (req: Request, res: Response, next: NextFunction) =>
   const queryNumber: number = parseInt(<string>req.query.query);
 
   const firstRequest: Promise<string> = delayService.delayRequest(queryNumber);
-  const secondRequest: Promise<string> = delayService.delayRequest(queryNumber);
+  const secondRequest: Promise<string> = delayService.delayRequest(parseInt(<string>process.env.DEFAULT_DELAY));
 
   const [firstResponse, secondResponse] = await Promise.all([firstRequest, secondRequest]);
 

@@ -1,12 +1,14 @@
 import axios from 'axios';
 import {DummyApi} from './client';
 import logger from './Logger';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 class DelayService {
   private dummyApi: DummyApi;
 
   constructor() {
-    this.dummyApi = new DummyApi(undefined, 'https://httpbin.org', axios);
+    this.dummyApi = new DummyApi(undefined, process.env.BASE_PATH, axios);
   }
 
   async delayRequest(query: number): Promise<string> {
