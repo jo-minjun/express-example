@@ -1,0 +1,46 @@
+openapi: 3.0.1
+info:
+  title: bff
+  version: 0.0.1
+servers:
+- description: local
+  url: http://localhost:3000
+tags:
+- name: Example
+paths:
+  /api/delay/{seconds}:
+    get:
+      operationId: getDelayString
+      parameters:
+      - explode: false
+        in: path
+        name: seconds
+        required: true
+        schema:
+          description: delay
+          example: 3
+          format: int32
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExampleResponse'
+          description: Ok
+      tags:
+      - Example
+      x-eov-operation-handler: controllers/ExampleController
+components:
+  schemas:
+    ExampleResponse:
+      example:
+        firstResponse: firstResponse
+        secondResponse: secondResponse
+      properties:
+        firstResponse:
+          type: string
+        secondResponse:
+          type: string
+      type: object
